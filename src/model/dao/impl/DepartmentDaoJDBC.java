@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.cj.x.protobuf.MysqlxPrepare.Prepare;
+
 import db.DB;
 import db.DbException;
 import model.dao.DepartmentDao;
@@ -71,7 +73,21 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement("DELETE FROM department WHERE Id = ?");
+			
+			ps.setInt(1, id);
+			
+			int rows = ps.executeUpdate();
+			if(rows == 0) {
+				throw new SQLException();
+			}
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(ps);
+		}
 		
 	}
 
