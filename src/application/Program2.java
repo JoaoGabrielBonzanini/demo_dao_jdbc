@@ -27,10 +27,12 @@ public class Program2 {
 //		Department newDepartment = new Department(null, "Shenenigans");
 //		departmentDao.insert(newDepartment);
 		
-		List<Department> departmentList1 = departmentDao.findAll();
-		for(Department dep1 : departmentList1) {
-			System.out.println(dep1);
-		}
+		
+		System.out.println("\n Update");
+		Department updateDepartment = departmentDao.findById(7);
+		updateDepartment.setName("Security");
+		departmentDao.update(updateDepartment);
+		System.out.println("Up to date.");
 
 	}
 
